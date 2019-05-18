@@ -1,7 +1,7 @@
 package session3
 
 import org.scalatest.{FunSuite, Matchers}
-import session3.models.{MostCommonBirdView, Sighting, TotalAmountView, UniquesBirdTypeDetectedView}
+import session3.models.{MostCommonBirdView, Sighting, TotalAmountView, TwoMostSightingCountriesView, UniquesBirdTypeDetectedView}
 import session3.services.ViewCreatorService
 
 class ViewCreatorServiceTest extends FunSuite with Matchers {
@@ -78,4 +78,26 @@ class ViewCreatorServiceTest extends FunSuite with Matchers {
     realMostCommonBirdView should be (expectedMostCommonBirdView)
 
   }
+
+  test("Should create a TwoMostSightingCountries object from Sighting Seq") {
+    val inputSightingSeq:Seq[Sighting]  = Seq(
+      Sighting(12, "Italy"),
+      Sighting(3, "Germany"),
+      Sighting(1, "Italy"),
+      Sighting(56, "England"),
+      Sighting(1, "Cuba"),
+      Sighting(567, "Germany"),
+      Sighting(1, "EEUU"),
+      Sighting(567, "Germany"),
+    )
+
+    val expectedTwoMostSightingCounrties: TwoMostSightingCountriesView = TwoMostSightingCountriesView("Germany, Italy")
+
+    val realTwoMostSightingCountries: TwoMostSightingCountriesView = ViewCreatorService.createTwoMostSightingCountries(inputSightingSeq)
+
+    realTwoMostSightingCountries should be (expectedTwoMostSightingCounrties)
+
+  }
+
+
 }
